@@ -55,11 +55,11 @@ export const HeroSection = () => {
           ClarityCall é a sua nova plataforma de videochamadas, desenhada para a colaboração moderna. Foco, produtividade e um design que encanta.
         </p>
         <div className="mt-8 flex justify-center items-center gap-3">
-          <Button size="lg" className="gap-2 group bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20">
+          <Button size="lg" className="gap-2 cursor-pointer group bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20">
             Experimente grátis
             <MoveRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Button>
-          <Button size="lg" variant="outline" className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
+          <Button size="lg" className="bg-gray-200  dark:bg-slate-800 cursor-pointer backdrop-blur-sm">
             Fale com vendas
           </Button>
         </div>

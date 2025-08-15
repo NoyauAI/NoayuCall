@@ -1,3 +1,247 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @custom-variant dark (&:where(.dark, .dark *));
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: theme('fontWeight.semibold');
+    padding: theme('spacing.2') theme('spacing.4');
+    border-radius: theme('borderRadius.md');
+    border: 1px solid transparent;
+    cursor: pointer;
+    user-select: none;
+    transition-property: color, background-color, border-color, box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  
+    /* Estilo de foco para acessibilidade */
+    &:focus-visible {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  }
+  
+  .btn-primary {
+    color: theme('colors.white');
+    background-color: theme('colors.blue.600');
+    border-color: theme('colors.blue.600');
+    
+    &:hover {
+      background-color: theme('colors.blue.700');
+      border-color: theme('colors.blue.700');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.blue.300 / 50%');
+    }
+  }
+  
+  .btn-secondary {
+    color: theme('colors.white');
+    background-color: theme('colors.slate.500');
+    border-color: theme('colors.slate.500');
+    
+    &:hover {
+      background-color: theme('colors.slate.600');
+      border-color: theme('colors.slate.600');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.slate.300 / 50%');
+    }
+  }
+  
+  .btn-success {
+    color: theme('colors.white');
+    background-color: theme('colors.green.600');
+    border-color: theme('colors.green.600');
+    
+    &:hover {
+      background-color: theme('colors.green.700');
+      border-color: theme('colors.green.700');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.green.300 / 50%');
+    }
+  }
+  
+  .btn-danger {
+    color: theme('colors.white');
+    background-color: theme('colors.red.600');
+    border-color: theme('colors.red.600');
+    
+    &:hover {
+      background-color: theme('colors.red.700');
+      border-color: theme('colors.red.700');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.red.300 / 50%');
+    }
+  }
+  
+  .btn-warning {
+    color: theme('colors.black');
+    background-color: theme('colors.amber.400');
+    border-color: theme('colors.amber.400');
+    
+    &:hover {
+      background-color: theme('colors.amber.500');
+      border-color: theme('colors.amber.500');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.amber.200 / 50%');
+    }
+  }
+  
+  .btn-info {
+    color: theme('colors.white');
+    background-color: theme('colors.sky.500');
+    border-color: theme('colors.sky.500');
+    
+    &:hover {
+      background-color: theme('colors.sky.600');
+      border-color: theme('colors.sky.600');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.sky.200 / 50%');
+    }
+  }
+  
+  .btn-light {
+    color: theme('colors.slate.800');
+    background-color: theme('colors.slate.200');
+    border-color: theme('colors.slate.200');
+    
+    &:hover {
+      background-color: theme('colors.slate.300');
+      border-color: theme('colors.slate.300');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.slate.300 / 50%');
+    }
+  }
+  
+  .btn-dark {
+    color: theme('colors.white');
+    background-color: theme('colors.slate.800');
+    border-color: theme('colors.slate.800');
+    
+    &:hover {
+      background-color: theme('colors.slate.900');
+      border-color: theme('colors.slate.900');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.slate.500 / 50%');
+    }
+  }
+  
+  .btn-outline-primary {
+    color: theme('colors.blue.600');
+    border-color: theme('colors.blue.600');
+    
+    &:hover {
+      color: theme('colors.white');
+      background-color: theme('colors.blue.600');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.blue.300 / 50%');
+    }
+  }
+  
+  .btn-outline-secondary {
+    color: theme('colors.slate.500');
+    border-color: theme('colors.slate.500');
+    
+    &:hover {
+      color: theme('colors.white');
+      background-color: theme('colors.slate.500');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.slate.300 / 50%');
+    }
+  }
+  
+  .btn-outline-success {
+    color: theme('colors.green.600');
+    border-color: theme('colors.green.600');
+    
+    &:hover {
+      color: theme('colors.white');
+      background-color: theme('colors.green.600');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.green.300 / 50%');
+    }
+  }
+  
+  .btn-outline-danger {
+    color: theme('colors.red.600');
+    border-color: theme('colors.red.600');
+    
+    &:hover {
+      color: theme('colors.white');
+      background-color: theme('colors.red.600');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.red.300 / 50%');
+    }
+  }
+  
+  .btn-outline-warning {
+    color: theme('colors.amber.500');
+    border-color: theme('colors.amber.500');
+    
+    &:hover {
+      color: theme('colors.black');
+      background-color: theme('colors.amber.500');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.amber.200 / 50%');
+    }
+  }
+  
+  .btn-outline-info {
+    color: theme('colors.sky.500');
+    border-color: theme('colors.sky.500');
+    
+    &:hover {
+      color: theme('colors.white');
+      background-color: theme('colors.sky.500');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.sky.200 / 50%');
+    }
+  }
+  
+  .btn-outline-light {
+    color: theme('colors.slate.300');
+    border-color: theme('colors.slate.300');
+    
+    &:hover {
+      color: theme('colors.slate.800');
+      background-color: theme('colors.slate.300');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.slate.300 / 50%');
+    }
+  }
+  
+  .btn-outline-dark {
+    color: theme('colors.slate.800');
+    border-color: theme('colors.slate.800');
+    
+    &:hover {
+      color: theme('colors.white');
+      background-color: theme('colors.slate.800');
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 3px theme('colors.slate.500 / 50%');
+    }
+  }
+
+  .btn-circle {
+    width: theme('spacing.10');
+    height: theme('spacing.10');
+    padding: 0;
+    border-radius: 50%;
+  }
