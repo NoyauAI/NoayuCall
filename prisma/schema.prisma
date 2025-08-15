@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrganizationRole {
+  OWNER
+  ADMIN
+  MEMBER
+  BILLING
+}
+
+enum TeamRole {
+  ADMIN
+  MEMBER
+  GUEST
+}
+
+enum CallStatus {
+  SCHEDULED
+  IN_PROGRESS
+  ENDED
+  CANCELLED
+}
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  memberships OrganizationMembership[]
+  teams       Team[]
+
+  @@map("organizations")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organizationMemberships OrganizationMembership[]
+  teamMemberships         TeamMembership[]
+  createdCalls            Call[]                   @relation("CallCreator")
+  callParticipations      CallParticipant[]
+
+  sessions Session[]
+
+  @@map("users")
+}
+
+model OrganizationMembership {
+  role OrganizationRole @default(MEMBER)
+
+  userId         String
+  organizationId String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@id([userId, organizationId])
+  @@map("organization_memberships")
+}
+
+model Team {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  organizationId String
+  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  members        TeamMembership[]
+  calls          Call[]
+
+  @@map("teams")
+}
+
+model TeamMembership {
+  jobTitle String
+  salary   Decimal  @db.Decimal(10, 2)
+  role     TeamRole @default(MEMBER)
+  joinedAt DateTime @default(now())
+
+  userId String
+  teamId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@id([userId, teamId])
+  @@map("team_memberships")
+}
+
+model Call {
+  id          String     @id @default(cuid())
+  topic       String
+  status      CallStatus @default(SCHEDULED)
+  scheduledAt DateTime
+  startedAt   DateTime?
+  endedAt     DateTime?
+
+  teamId String
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  creatorId String?
+  creator   User?   @relation("CallCreator", fields: [creatorId], references: [id], onDelete: SetNull)
+
+  participants CallParticipant[]
+
+  @@map("calls")
+}
+
+model CallParticipant {
+  joinedAt DateTime  @default(now())
+  leftAt   DateTime?
+
+  userId String
+  callId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  call   Call   @relation(fields: [callId], references: [id], onDelete: Cascade)
+
+  @@id([userId, callId])
+  @@map("call_participants")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

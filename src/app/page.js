@@ -15,7 +15,7 @@ export default function LandingPage() {
         <FeaturesSection />
         <TestimonialsSection />
         <FinalCtaSection>
-          <Button size="lg" className="bg-white text-blue-600 font-bold py-3 px-8 rounded-lg text-lg hover:bg-slate-100 transition-colors shadow-2xl">
+          <Button size="lg" className="bg-white cursor-pointer text-blue-600 font-bold py-3 px-8 rounded-lg text-lg hover:bg-slate-100 transition-colors shadow-2xl">
             Começar grátis
           </Button>
         </FinalCtaSection>
