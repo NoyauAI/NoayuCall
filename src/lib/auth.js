@@ -1,26 +1,20 @@
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { cache } from 'react';
 import { getSession } from './session';
+import { headers } from 'next/headers';
 
-export function withAuth(handler) {
-  return async function (req, ...args) {
-    const cookieStore = cookies();
-    const sessionToken = cookieStore.get('connect')?.value;
+/**
+ * @returns {Promise<object|null>} O objeto do usuário se a sessão for válida, senão null.
+ */
+export const getCurrentUser = cache(async () => {
+  const headersList = await headers();
+  const sessionToken = headersList.get('x-session-token');
 
-    if (!sessionToken) {
-      return NextResponse.json({ message: 'Não autorizado' }, { status: 401 });
-    }
-
-    const session = await getSession(sessionToken);
-
-    if (!session) {
-      cookieStore.delete('connect');
-      return NextResponse.json({ message: 'Não autorizado' }, { status: 401 });
-    }
-
-    req.user = session.user;
-    req.session = session;
-
-    return handler(req, ...args);
-  };
-}
+  if (!sessionToken) {
+    return null;
+  }
+  const session = await getSession(sessionToken);
+  if (!session) {
+    return null;
+  }
+  return session.user;
+});

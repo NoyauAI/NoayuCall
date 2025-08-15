@@ -86,10 +86,10 @@ model Team {
 }
 
 model TeamMembership {
-  jobTitle String
-  salary   Decimal  @db.Decimal(10, 2)
-  role     TeamRole @default(MEMBER)
-  joinedAt DateTime @default(now())
+  jobTitle   String
+  hourlyRate Decimal  @db.Decimal(10, 2)
+  role       TeamRole @default(MEMBER)
+  joinedAt   DateTime @default(now())
 
   userId String
   teamId String
