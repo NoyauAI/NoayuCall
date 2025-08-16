@@ -1,12 +1,17 @@
 "use client";
 import React, {useState, useEffect} from "react"
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Input } from "./Input"
 import { Button } from "@/components/ui/button"
+import LoginConfirmationModal from "@/components/ui/modal";
 
 const Register = () => {
+    const router = useRouter()
 
     const [formData, setFormData] = useState({})
     const [errors, setErrors] = useState({})
+    const [isModalOpen, setIsModalOpen] = useState(false)
     
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -30,9 +35,15 @@ const Register = () => {
         setErrors(newErrors)
 
         if (Object.keys(newErrors).length === 0) {
-      alert("Cadastro feito com sucesso!");
-      setForm({ name: "", email: "", password: "", confirmPassword: "" });
+      setIsModalOpen(true)
+      setFormData({ name: "", email: "", password: "", confirmPassword: "" });
     }
+    }
+
+        const handleClose = () => {
+        setIsModalOpen(false)
+
+        router.push('/login')
     }
 
     return (
@@ -110,13 +121,37 @@ const Register = () => {
                         value={formData.confirmPassword || ""}
                         />
                         {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
-                        <button type="submit" data-slot="button" class="mb-3 mt-2 inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-10 rounded-md px-6 has-[&gt;svg]:px-4 gap-2 group bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20">Realizar o cadastro<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-right h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true"></svg></button>
-                        <a className="hover:underline underline-offset-1 text-center mb-3">Já possui uma conta? <span className="text-blue-500">Entre com ela</span></a>
+                         <button
+  type="submit"
+  data-slot="button"
+  className="mb-3 mt-2 inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-10 rounded-md px-6 has-[&>svg]:px-4 gap-2 group bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20"
+>
+  Realizar o cadastro
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round" 
+    className="lucide lucide-move-right h-4 w-4 transition-transform group-hover:translate-x-1"
+    aria-hidden="true"
+  ></svg>
+</button>
+                        <Link className="hover:underline underline-offset-1 text-center mb-3" href={"/login"}>Já possui uma conta? <span className="text-blue-500">Entre com ela</span></Link>
                         </div>
 
                 </form>
-        
             </div>
+            <LoginConfirmationModal
+                    isOpen={isModalOpen}
+                    onClose={() => handleClose()}
+                    title={"Cadastro"}
+                    message={"Cadastro realizado com sucesso."}
+                  />
              <div>
                     <img src="/Remote meeting-bro.svg" alt="Reunião remota" ></img>
                 </div>
