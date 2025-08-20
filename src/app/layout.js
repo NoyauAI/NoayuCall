@@ -1,6 +1,9 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ClerkProvider } from "@clerk/nextjs";
+
+const clerkPubKey = "pk_test_ZG9taW5hbnQtYmVkYnVnLTk1LmNsZXJrLmFjY291bnRzLmRldiQ";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,6 +26,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
+        <ClerkProvider publishableKey={clerkPubKey}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -31,6 +35,7 @@ export default function RootLayout({ children }) {
         >
           {children}
         </ThemeProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 
 export default function LandingPage() {
   return (
+    
     <div className="flex flex-col min-h-screen bg-white dark:bg-slate-950">
       <Header />
       <main className="flex-grow">

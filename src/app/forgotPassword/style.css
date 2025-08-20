@@ -1,7 +1,0 @@
-.underline-short {
-  background-image: linear-gradient(#1d4ed8, #1d4ed8);
-  background-repeat: no-repeat;
-  background-size: 75% 3px; 
-  background-position: center bottom;
-  transition: background-size 0.3s ease;
-}

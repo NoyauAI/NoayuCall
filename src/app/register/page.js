@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { Input } from "./Input"
 import { Button } from "@/components/ui/button"
 import LoginConfirmationModal from "@/components/ui/modal";
+import { useSignIn } from "@clerk/nextjs";
+import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
     const router = useRouter()
@@ -12,6 +14,21 @@ const Register = () => {
     const [formData, setFormData] = useState({})
     const [errors, setErrors] = useState({})
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const { isLoaded, signIn } = useSignIn()
+
+    if(!isLoaded) return null
+
+    const handleGoogleAuth = async () => {
+        try {
+            await signIn.authenticateWithRedirect({
+                        strategy: "oauth_google",
+                        redirectUrl: "/sso-callback",
+                        redirectUrlComplete: "/login",
+            })
+        } catch(err) {
+            console.error(err)
+        }
+    }
     
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -60,7 +77,7 @@ const Register = () => {
             backdrop-blur-xl 
             ring-2 ring-blue-400/90 dark:ring-blue-700/10 
             rounded-3xl 
-            shadow-2xl shadow-blue-500/10 dark:shadow-blue-400/10 flex flex-col items-center" >
+            shadow-2xl shadow-blue-500/10 dark:shadow-blue-400/10 flex flex-col items-center justify-center" >
                         <h1 className="mt-5 mb-6 uppercase font-bold text-3xl text-center items-center" >
                             Cadastre-se!
                         </h1>
@@ -140,6 +157,9 @@ const Register = () => {
     className="lucide lucide-move-right h-4 w-4 transition-transform group-hover:translate-x-1"
     aria-hidden="true"
   ></svg>
+</button>
+<button onClick={handleGoogleAuth} className="flex text-4xl cursor-pointer">
+    <FcGoogle className="w-full" />
 </button>
                         <Link className="hover:underline underline-offset-1 text-center mb-3" href={"/login"}>Já possui uma conta? <span className="text-blue-500">Entre com ela</span></Link>
                         </div>

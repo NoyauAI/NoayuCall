@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { Input } from "../register/Input";
 import { Button } from "@/components/ui/button"
 import LoginConfirmationModal from "@/components/ui/modal";
+import { useSignIn } from "@clerk/nextjs";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
     const router = useRouter()
@@ -12,6 +14,21 @@ const Login = () => {
     const [formData, setFormData] = useState({})
     const [errors, setErrors] = useState({})
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const {isLoaded, signIn} = useSignIn()
+
+    if(!isLoaded) return null
+
+    const handleGoogleLogin = async () => {
+        try {
+            await signIn.authenticateWithRedirect({
+                 strategy: "oauth_google",
+                 redirectUrl: "/sso-callback", 
+                 redirectUrlComplete: "/dashboard"
+            })
+        } catch (err) {
+            console.error(err)
+        }
+    }
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -125,6 +142,9 @@ const Login = () => {
     className="lucide lucide-move-right h-4 w-4 transition-transform group-hover:translate-x-1"
     aria-hidden="true"
   ></svg>
+</button>
+<button onClick={handleGoogleLogin} className="flex text-4xl cursor-pointer">
+    <FcGoogle className="w-full" />
 </button>
                          <Link className="hover:underline underline-offset-1 text-center mb-3" href={"register"} >Ainda não possui uma conta? <span className="text-blue-500">Crie uma</span></Link>
                         </div>
